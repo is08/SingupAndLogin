@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "users")
+@Entity                     //allows our class to be serialised & deserialized into & from JSON
+@Table(name = "users")          //to cal table "users"
 public class Users {
 
     @Column(name = "first_name")
@@ -15,12 +15,23 @@ public class Users {
     @Column(name = "last_name")
     private String lastName;
 
-    @Id
+    @Id                             //to set a primary key
     @Column(name = "email")
     private String email;
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "logged_in")
+    private Boolean loggedIn;
+
+    public Boolean getLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(Boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -62,6 +73,13 @@ public class Users {
     }
 
     public Users() {
+    }
+
+    public Users(String firstName, String lastName, String email, Boolean loggedIn){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.loggedIn = loggedIn;
     }
 
     @Override
