@@ -22,6 +22,20 @@ public class UsersService {
 
 
     public Users getSpecific(String email) {
-        return usersRepository.findById(email).get();
+        Users tempUser = usersRepository.findById(email).get();
+
+        return new Users(tempUser.getFirstName(), tempUser.getLastName(), tempUser.getEmail(), tempUser.getLoggedIn());
+    }
+
+    public Status registerUser(Users newUser) {
+        if(usersRepository.existsById(newUser.getEmail())){
+            return Status.USER_ALREADY_EXISTS;
+        }
+        else{
+            newUser.setLoggedIn(false);
+            usersRepository.save(newUser);
+        }
+
+        return Status.SUCCESS;
     }
 }

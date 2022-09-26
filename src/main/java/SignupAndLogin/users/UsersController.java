@@ -19,13 +19,28 @@ public class UsersController {
     @GetMapping("/user")
     public ResponseEntity getSpecificUser(@RequestBody String email){
 
-        System.out.println(email);
-
         try {
             return ResponseEntity.status(200).body(usersService.getSpecific(email));
         }
         catch (Exception e){
             return ResponseEntity.status(404).body("User doesn't exist " + e.getMessage());
         }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity registerUser(@RequestBody Users newUser){
+
+        if(usersService.registerUser(newUser) == Status.USER_ALREADY_EXISTS){
+            return ResponseEntity.status(409).body(Status.USER_ALREADY_EXISTS);
+        }
+
+        try{
+            usersService.registerUser(newUser);
+            return ResponseEntity.status(200).body(Status.SUCCESS);
+        }
+        catch(Exception e){
+            return ResponseEntity.status(404).body(Status.FAILURE + " " + e.getMessage());
+        }
+
     }
 }

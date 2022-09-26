@@ -1,5 +1,7 @@
 package SignupAndLogin.users;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,9 +19,11 @@ public class Users {
 
     @Id                             //to set a primary key
     @Column(name = "email")
+    @NotNull
     private String email;
 
     @Column(name = "password")
+    @NotNull
     private String password;
 
     @Column(name = "logged_in")
