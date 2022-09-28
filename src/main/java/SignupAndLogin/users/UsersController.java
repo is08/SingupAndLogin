@@ -43,4 +43,37 @@ public class UsersController {
         }
 
     }
+
+    @PutMapping("/login")
+    public ResponseEntity loginUser(@RequestBody String email){
+
+        if(usersService.login(email) == Status.USER_DOES_NOT_EXIST){
+            return ResponseEntity.status(404).body(Status.USER_DOES_NOT_EXIST);
+        }
+
+        try{
+            usersService.login(email);
+            return ResponseEntity.status(200).body("Successfully Logged In!");
+        }
+        catch(Exception e){
+            return ResponseEntity.status(404).body(Status.FAILURE + " " + e.getMessage());
+        }
+
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity deleteUser(@RequestBody String email){
+
+        if(usersService.delete(email) == Status.USER_DOES_NOT_EXIST){
+            return ResponseEntity.status(404).body(Status.USER_DOES_NOT_EXIST);
+        }
+
+        try{
+            usersService.delete(email);
+            return ResponseEntity.status(200).body("Successfully Deleted User");
+        }
+        catch(Exception e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
 }

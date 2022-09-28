@@ -38,4 +38,27 @@ public class UsersService {
 
         return Status.SUCCESS;
     }
+
+    public Status login(String email) {
+
+        if(!usersRepository.existsById(email)){
+            return Status.USER_DOES_NOT_EXIST;
+        }
+
+        Users tempUser = usersRepository.findById(email).get();
+
+        tempUser.setLoggedIn(true);
+
+        usersRepository.save(tempUser);
+        return Status.SUCCESS;
+    }
+
+    public Status delete(String email) {
+        if(!usersRepository.existsById(email)){
+            return Status.USER_DOES_NOT_EXIST;
+        }
+
+        usersRepository.deleteById(email);
+        return Status.SUCCESS;
+    }
 }
